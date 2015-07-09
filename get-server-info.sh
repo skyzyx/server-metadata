@@ -140,6 +140,9 @@ fi;
 echo ""
 
 echo "SERVICES:"
+if [[ $(which docker 2>&1) != *"no docker"* && $(which docker 2>&1) ]]; then
+    echo "Docker $(docker --version | sed -e "s/.*version //" | sed -e "s/,.*//")"
+fi;
 if [[ $(which httpd 2>&1) != *"no httpd"* && $(which httpd 2>&1) ]]; then
     echo "$(httpd -v | grep -i "Server version:" | sed -e "s/Server version: *//")"
 fi;
