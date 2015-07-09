@@ -61,7 +61,7 @@ elif [[ $(which hostname 2>&1) != *"no hostname"* && $(which hostname 2>&1) ]]; 
     echo "Hostname: $(hostname)"
 fi;
 if [[ $(which ifconfig 2>&1) != *"no ifconfig"* && $(which ifconfig 2>&1) ]]; then
-    echo "Internal IP: $(ifconfig | awk -F "[: ]+" '/inet addr:/ { if ($4 != "127.0.0.1") print $4 }')"
+    echo "Internal IP(s): $(ifconfig | awk -F "[: ]+" '/inet addr:/ { if ($4 != "127.0.0.1") print $4 }' | awk '{printf "%s, ", $0} END {print ""}' | awk '{sub(/, $/,""); print}')"
 fi;
 
 #-------------------------------------------------------------------------------
@@ -113,7 +113,7 @@ if [[ $(which go 2>&1) != *"no go"* && $(which go 2>&1) ]]; then
     echo "Golang: $(go version 2>&1 | sed -e "s/version go//" | awk '{print $2}')"
 fi;
 if [[ $(which java 2>&1) != *"no java"* && $(which java 2>&1) ]]; then
-    echo "$(java -version 2>&1 | head -n 2 | tail -n 1)"
+    echo "Java $(java -version 2>&1 | head -n 2 | tail -n 1 | sed -e "s/.*build //" | tr -d ")" )"
 fi;
 if [[ $(which node 2>&1) != *"no node"* && $(which node 2>&1) ]]; then
     echo "Node.js $(node --version 2>&1)"
