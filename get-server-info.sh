@@ -59,9 +59,14 @@ echo "HARDWARE:"
 if [ -f /proc/cpuinfo ]; then
     echo "CPU Speed: $(cat /proc/cpuinfo | grep 'model name' | awk {'print $8'} | head -n 1)"
     echo "CPU Cores: $(cat /proc/cpuinfo | grep 'cpu cores' | awk {'print $4}' | head -n 1)"
+elif [[ $(which sysctl 2>&1) != *"no sysctl"* ]]; then
+    echo "CPU Speed: $(sysctl -n machdep.cpu.brand_string | sed -e "s/.*@ *//")"
+    echo "CPU Cores: $(sysctl -n hw.ncpu)"
 fi;
 if [ -f /proc/meminfo ]; then
     echo "Memory: $(expr $(cat /proc/meminfo | grep 'MemTotal:' | awk {'print $2}') / 1024) MB"
+elif [[ $(which sysctl 2>&1) != *"no sysctl"* ]]; then
+    echo "Memory: $(expr $(sysctl -n hw.memsize) / 1024 / 1024) MB"
 fi;
 if [ -f /proc/uptime ]; then
     echo "System Uptime: $( __uptime )"
@@ -76,22 +81,22 @@ echo ""
 echo "SOFTWARE:"
 echo "OpenSSL $(yum list openssl 2>&1 | grep -i "openssl.x86_64" | awk '{print $2}')"
 if [[ $(which go 2>&1) != *"no go"* ]]; then
-    echo -n "Golang: $(go version 2>&1 | sed -e "s/version go//" | awk '{print $2}')"
+    echo "Golang: $(go version 2>&1 | sed -e "s/version go//" | awk '{print $2}')"
 fi;
 if [[ $(which java 2>&1) != *"no java"* ]]; then
     echo "$(java -version 2>&1 | head -n 2 | tail -n 1)"
 fi;
 if [[ $(which php 2>&1) != *"no php"* ]]; then
-    echo -n "$(php --version 2>&1 | head -n 1 | sed -e "s/(cli).*//")"
+    echo "$(php --version 2>&1 | head -n 1 | sed -e "s/(cli).*//")"
 fi;
 if [[ $(which python 2>&1) != *"no python"* ]]; then
-    echo -n "$(python --version)"
+    echo "$(python --version)"
 fi;
 if [[ $(which python3 2>&1) != *"no python3"* ]]; then
-    echo -n "$(python3 --version)"
+    echo "$(python3 --version)"
 fi;
 if [[ $(which ruby 2>&1) != *"no ruby"* ]]; then
-    echo -n "$(ruby --version | sed -e "s/(.*//" | sed -e "s/ruby/Ruby/")"
+    echo "$(ruby --version | sed -e "s/(.*//" | sed -e "s/ruby/Ruby/")"
 fi;
 
 #-------------------------------------------------------------------------------
