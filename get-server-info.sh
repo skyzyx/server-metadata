@@ -127,7 +127,7 @@ if [[ $(which php 2>&1) != *"no php"* && $(which php 2>&1) ]]; then
     echo "$(php --version 2>&1 | head -n 1 | sed -e "s/(cli).*//")"
 fi;
 if [[ $(which python 2>&1) != *"no python"* && $(which python 2>&1) ]]; then
-    echo -n "$(python --version 2>&1)"
+    echo "$(python --version 2>&1)"
 fi;
 if [[ $(which python3 2>&1) != *"no python3"* && $(which python3 2>&1) ]]; then
     echo "$(python3 --version 2>&1)"
