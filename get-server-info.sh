@@ -3,6 +3,8 @@
 #
 # Written against Bash 4.x.
 
+echo "#-------------------------------------------------------------------------------"
+
 # Which version of sed do we have available?
 if [[ $(sed --help 2>&1) && $? -eq 0 ]]; then
     gnused=true
@@ -201,3 +203,5 @@ fi;
 if [[ $(which yum 2>&1) != *"no yum"* && $(which yum 2>&1) ]]; then
     echo "YUM $(yum --version | head -n 1)"
 fi;
+
+echo "#-------------------------------------------------------------------------------"
