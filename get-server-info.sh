@@ -7,6 +7,18 @@ if [[ -f /etc/environment ]]; then
     source /etc/environment;
 fi;
 
+# Which version of sed do we have available?
+if [[ $(sed --help 2>&1) && $? -eq 0 ]]; then
+    gnused=true
+    sed=sed
+elif [[ $(gsed --help 2>&1) && $? -eq 0 ]]; then
+    gnused=true
+    sed=gsed
+else
+    gnused=false
+    sed=sed
+fi;
+
 function __uptime() {
     uptime=$(cat /proc/uptime)
     uptime=${uptime%%.*}
@@ -123,9 +135,6 @@ fi;
 echo ""
 
 echo "SERVICES:"
-if [[ $(which cassandra 2>&1) != *"no cassandra"* && $(which cassandra 2>&1) ]]; then
-    echo "Cassandra $(cassandra -v)"
-fi;
 if [[ $(which httpd 2>&1) != *"no httpd"* && $(which httpd 2>&1) ]]; then
     echo "$(httpd -v | grep -i "Server version:" | sed -e "s/Server version: *//")"
 fi;
@@ -162,7 +171,11 @@ if [[ $(which bundler 2>&1) != *"no bundler"* && $(which bundler 2>&1) ]]; then
     echo "$(bundler -v | sed -e "s/ version//")"
 fi;
 if [[ $(which composer 2>&1) != *"no composer"* && $(which composer 2>&1) ]]; then
-    echo "$(composer --version)"
+    if [[ $gnused == true ]]; then
+        echo "$(composer --version)" | sed -e "s/ version//" | sed -e "s/ (.*)//" | $sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"
+    else
+        echo "$(composer --version)" | sed -e "s/ version//" | sed -e "s/ (.*)//"
+    fi;
 fi;
 if [[ $(which brew 2>&1) != *"no brew"* && $(which brew 2>&1) ]]; then
     echo "Homebrew $(brew --version)"
