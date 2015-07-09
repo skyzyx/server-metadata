@@ -79,8 +79,12 @@ fi;
 echo ""
 
 echo "SOFTWARE:"
-echo "$(curl --version 2>&1 | head -n 1 | sed -e "s/ ([^\)]*)/:/")"
-echo "$(git version | sed -e "s/git version/Git/" | head -n 1)"
+if [[ $(which curl 2>&1) != *"no curl"* && $(which curl 2>&1) ]]; then
+    echo "$(curl --version 2>&1 | head -n 1 | sed -e "s/ ([^\)]*)/:/")"
+fi;
+if [[ $(which git 2>&1) != *"no git"* && $(which git 2>&1) ]]; then
+    echo "$(git version | sed -e "s/git version/Git/" | head -n 1)"
+fi;
 if [[ $(which openssl 2>&1) != *"no openssl"* && $(which openssl 2>&1) ]] && [[ $(which yum 2>&1) != *"no yum"* && $(which yum 2>&1) ]]; then
     echo "OpenSSL $(yum list openssl 2>&1 | grep -i "openssl.x86_64" | awk '{print $2}')"
 elif [[ $(which openssl 2>&1) != *"no openssl"* && $(which openssl 2>&1) ]] && [[ $(which apt-get 2>&1) != *"no yum"* && $(which apt-get 2>&1) ]]; then
@@ -106,7 +110,7 @@ if [[ $(which php 2>&1) != *"no php"* && $(which php 2>&1) ]]; then
     echo "$(php --version 2>&1 | head -n 1 | sed -e "s/(cli).*//")"
 fi;
 if [[ $(which python 2>&1) != *"no python"* && $(which python 2>&1) ]]; then
-    echo "$(python --version)"
+    echo -n "$(python --version)"
 fi;
 if [[ $(which python3 2>&1) != *"no python3"* && $(which python3 2>&1) ]]; then
     echo "$(python3 --version)"
