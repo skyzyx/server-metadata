@@ -119,9 +119,14 @@ fi;
 #-------------------------------------------------------------------------------
 echo ""
 
+hhvm=false
 echo "RUNTIMES:"
 if [[ $(which go 2>&1) != *"no go"* && $(which go 2>&1) ]]; then
     echo "Golang: $(go version 2>&1 | sed -e "s/version go//" | awk '{print $2}')"
+fi;
+if [[ $(which hhvm 2>&1) != *"no hhvm"* && $(which hhvm 2>&1) ]]; then
+    hhvm=true
+    echo "HHVM $(hhvm --version | head -n 1 | sed -e "s/HipHop VM //" | sed -e "s/ (.*//")"
 fi;
 if [[ $(which java 2>&1) != *"no java"* && $(which java 2>&1) ]]; then
     echo "Java $(java -version 2>&1 | head -n 2 | tail -n 1 | sed -e "s/.*build //" | tr -d ")" )"
@@ -129,7 +134,7 @@ fi;
 if [[ $(which node 2>&1) != *"no node"* && $(which node 2>&1) ]]; then
     echo "Node.js $(node --version 2>&1)"
 fi;
-if [[ $(which php 2>&1) != *"no php"* && $(which php 2>&1) ]]; then
+if [[ $(which php 2>&1) != *"no php"* && $(which php 2>&1) && hhvm == false ]]; then
     echo "$(php --version 2>&1 | head -n 1 | sed -e "s/(cli).*//")"
 fi;
 if [[ $(which python 2>&1) != *"no python"* && $(which python 2>&1) ]]; then
