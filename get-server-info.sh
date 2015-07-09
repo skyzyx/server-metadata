@@ -1,22 +1,11 @@
 # https://github.com/skyzyx/server-metadata
 # By Ryan Parman
 #
-# Expects Python to be installed.
 # Written against Bash 4.x.
 
 if [[ -f /etc/environment ]]; then
     source /etc/environment;
 fi;
-
-function if_installed() {
-    if [ "$1" != "" ]; then
-        if [[ $(which $1 2>&1) =~ "no $1" ]]; then
-            echo 1;
-        else
-            echo 0;
-        fi;
-    fi;
-}
 
 function __uptime() {
     uptime=$(cat /proc/uptime)
@@ -39,32 +28,60 @@ function __rsyslog() {
 }
 
 echo "OPERATING SYSTEM:"
-if [ $(if_installed sw_vers) ]; then # OS X
+if [[ $(which sw_vers 2>&1) != *"no sw_vers"* ]]; then
     echo "OS: $(sw_vers -productName) $(sw_vers -productVersion) ($(sw_vers -buildVersion))"
-elif [ $(if_installed python) ]; then # Linux
+elif [[ $(which python 2>&1) != *"no python"* ]]; then
     echo "OS: $(python -c 'import platform; print platform.linux_distribution()[0] + " " + platform.linux_distribution()[1]')"
 fi;
-[[ $(if_installed uname) ]] && echo "Kernel: $(uname) $(uname -r)"
+if [[ $(which uname 2>&1) != *"no uname"* ]]; then
+    echo "Kernel: $(uname) $(uname -r)"
+fi;
 echo ""
 echo "NETWORK:"
-if [ $(if_installed scutil) ]; then # OS X
+if [[ $(which scutil 2>&1) != *"no scutil"* ]]; then
     echo "Hostname: $(scutil --get LocalHostName)"
-elif [ $(if_installed hostname) ]; then
+elif [[ $(which hostname 2>&1) != *"no hostname"* ]]; then
     echo "Hostname: $(hostname)"
 fi;
-[[ $(if_installed ifconfig) ]] && echo "Internal IP: $(ifconfig | awk -F "[: ]+" '/inet addr:/ { if ($4 != "127.0.0.1") print $4 }')"
+if [[ $(which ifconfig 2>&1) != *"no ifconfig"* ]]; then
+    echo "Internal IP: $(ifconfig | awk -F "[: ]+" '/inet addr:/ { if ($4 != "127.0.0.1") print $4 }')"
+fi;
 echo ""
 echo "HARDWARE:"
-[[ -f /proc/cpuinfo ]] && echo "CPU Speed: $(cat /proc/cpuinfo | grep 'model name' | awk {'print $8'} | head -n 1)"
-[[ -f /proc/cpuinfo ]] && echo "CPU Cores: $(cat /proc/cpuinfo | grep 'cpu cores' | awk {'print $4}' | head -n 1)"
-[[ -f /proc/meminfo ]] && echo "Memory: $(expr $(cat /proc/meminfo | grep 'MemTotal:' | awk {'print $2}') / 1024) MB"
-echo "System Uptime: $( __uptime )"
-[[ $(if_installed uptime) ]] && echo "Load Average: $(uptime | awk -F'load average:' '{ print $2 }' | sed 's/^ *//g')"
+if [ -f /proc/cpuinfo ]; then
+    echo "CPU Speed: $(cat /proc/cpuinfo | grep 'model name' | awk {'print $8'} | head -n 1)"
+    echo "CPU Cores: $(cat /proc/cpuinfo | grep 'cpu cores' | awk {'print $4}' | head -n 1)"
+fi;
+if [ -f /proc/meminfo ]; then
+    echo "Memory: $(expr $(cat /proc/meminfo | grep 'MemTotal:' | awk {'print $2}') / 1024) MB"
+fi;
+if [ -f /proc/uptime ]; then
+    echo "System Uptime: $( __uptime )"
+fi;
+if [[ $(which uptime 2>&1) != *"no uptime"* ]]; then
+    echo "Load Average: $(uptime | awk -F'load average:' '{ print $2 }' | sed 's/^ *//g')"
+fi;
 echo ""
 echo "SOFTWARE:"
 echo "OpenSSL $(yum list openssl 2>&1 | grep -i "openssl.x86_64" | awk '{print $2}')"
-echo -n "$(python --version)"
-echo "$(java -version 2>&1 | head -n 2 | tail -n 1)"
+if [[ $(which go 2>&1) != *"no go"* ]]; then
+    echo -n "Golang: $(go version 2>&1 | sed -e "s/version go//" | awk '{print $2}')"
+fi;
+if [[ $(which java 2>&1) != *"no java"* ]]; then
+    echo "$(java -version 2>&1 | head -n 2 | tail -n 1)"
+fi;
+if [[ $(which php 2>&1) != *"no php"* ]]; then
+    echo -n "$(php --version 2>&1 | head -n 1 | sed -e "s/(cli).*//")"
+fi;
+if [[ $(which python 2>&1) != *"no python"* ]]; then
+    echo -n "$(python --version)"
+fi;
+if [[ $(which python3 2>&1) != *"no python3"* ]]; then
+    echo -n "$(python3 --version)"
+fi;
+if [[ $(which ruby 2>&1) != *"no ruby"* ]]; then
+    echo -n "$(ruby --version | sed -e "s/(.*//" | sed -e "s/ruby/Ruby/")"
+fi;
 echo ""
 echo "SERVICES:"
 echo "Nginx $(nginx -v 2>&1 | sed -e "s/nginx version: //" | sed -e "s/nginx\///")"
