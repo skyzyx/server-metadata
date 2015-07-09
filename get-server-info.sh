@@ -27,6 +27,8 @@ function __rsyslog() {
     echo "$rsl"
 }
 
+#-------------------------------------------------------------------------------
+
 echo "OPERATING SYSTEM:"
 if [[ $(which sw_vers 2>&1) != *"no sw_vers"* ]]; then
     echo "OS: $(sw_vers -productName) $(sw_vers -productVersion) ($(sw_vers -buildVersion))"
@@ -36,7 +38,10 @@ fi;
 if [[ $(which uname 2>&1) != *"no uname"* ]]; then
     echo "Kernel: $(uname) $(uname -r)"
 fi;
+
+#-------------------------------------------------------------------------------
 echo ""
+
 echo "NETWORK:"
 if [[ $(which scutil 2>&1) != *"no scutil"* ]]; then
     echo "Hostname: $(scutil --get LocalHostName)"
@@ -46,7 +51,10 @@ fi;
 if [[ $(which ifconfig 2>&1) != *"no ifconfig"* ]]; then
     echo "Internal IP: $(ifconfig | awk -F "[: ]+" '/inet addr:/ { if ($4 != "127.0.0.1") print $4 }')"
 fi;
+
+#-------------------------------------------------------------------------------
 echo ""
+
 echo "HARDWARE:"
 if [ -f /proc/cpuinfo ]; then
     echo "CPU Speed: $(cat /proc/cpuinfo | grep 'model name' | awk {'print $8'} | head -n 1)"
@@ -61,7 +69,10 @@ fi;
 if [[ $(which uptime 2>&1) != *"no uptime"* ]]; then
     echo "Load Average: $(uptime | awk -F'load average:' '{ print $2 }' | sed 's/^ *//g')"
 fi;
+
+#-------------------------------------------------------------------------------
 echo ""
+
 echo "SOFTWARE:"
 echo "OpenSSL $(yum list openssl 2>&1 | grep -i "openssl.x86_64" | awk '{print $2}')"
 if [[ $(which go 2>&1) != *"no go"* ]]; then
@@ -82,7 +93,10 @@ fi;
 if [[ $(which ruby 2>&1) != *"no ruby"* ]]; then
     echo -n "$(ruby --version | sed -e "s/(.*//" | sed -e "s/ruby/Ruby/")"
 fi;
+
+#-------------------------------------------------------------------------------
 echo ""
+
 echo "SERVICES:"
 echo "Nginx $(nginx -v 2>&1 | sed -e "s/nginx version: //" | sed -e "s/nginx\///")"
 echo "$(curl --version 2>&1 | head -n 1 | sed -e "s/ ([^\)]*)/:/")"
