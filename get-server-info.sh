@@ -5,15 +5,15 @@
 # Written against Bash 4.x.
 
 if [[ -f /etc/environment ]]; then
-  source /etc/environment;
+    source /etc/environment;
 fi;
 
 function if_installed() {
     if [ "$1" != "" ]; then
         if [[ $(which $1 2>&1) =~ "no $1" ]]; then
-            exit 1;
+            echo 0;
         else
-            exit 0;
+            echo 1;
         fi;
     fi;
 }
