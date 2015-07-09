@@ -184,10 +184,10 @@ if [[ $(which npm 2>&1) != *"no npm"* && $(which npm 2>&1) ]]; then
     echo "npm $(npm --version)"
 fi;
 if [[ $(which pip 2>&1) != *"no pip"* && $(which pip 2>&1) ]]; then
-    echo "$(pip --version | sed -e "s/from.*(/(/")"
+    echo "$(pip --version 2>&1 | sed -e "s/from.*(/(/")"
 fi;
 if [[ $(which pip3 2>&1) != *"no pip3"* && $(which pip3 2>&1) ]]; then
-    echo "$(pip3 --version | sed -e "s/from.*(/(/")"
+    echo "$(pip3 --version 2>&1 | sed -e "s/from.*(/(/")"
 fi;
 if [[ $(which gem 2>&1) != *"no gem"* && $(which gem 2>&1) ]]; then
     echo "RubyGems $(gem --version)"
