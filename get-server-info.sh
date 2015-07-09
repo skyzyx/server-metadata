@@ -3,10 +3,6 @@
 #
 # Written against Bash 4.x.
 
-if [[ -f /etc/environment ]]; then
-    source /etc/environment;
-fi;
-
 # Which version of sed do we have available?
 if [[ $(sed --help 2>&1) && $? -eq 0 ]]; then
     gnused=true
@@ -94,6 +90,7 @@ echo "SOFTWARE:"
 if [[ $(which awk 2>&1) != *"no awk"* && $(which awk 2>&1) ]]; then
     echo "$(awk --version 2>&1 | head -n 1)"
 fi;
+echo "Bash $(bash --version 2>&1 | head -n 1 | sed -e "s/-release.*//" | sed -e "s/GNU bash, version //")"
 if [[ $(which curl 2>&1) != *"no curl"* && $(which curl 2>&1) ]]; then
     echo "$(curl --version 2>&1 | head -n 1 | sed -e "s/ ([^\)]*)/:/")"
 fi;
@@ -128,10 +125,10 @@ if [[ $(which php 2>&1) != *"no php"* && $(which php 2>&1) ]]; then
     echo "$(php --version 2>&1 | head -n 1 | sed -e "s/(cli).*//")"
 fi;
 if [[ $(which python 2>&1) != *"no python"* && $(which python 2>&1) ]]; then
-    echo -n "$(python --version)"
+    echo -n "$(python --version 2>&1)"
 fi;
 if [[ $(which python3 2>&1) != *"no python3"* && $(which python3 2>&1) ]]; then
-    echo "$(python3 --version)"
+    echo "$(python3 --version 2>&1)"
 fi;
 if [[ $(which ruby 2>&1) != *"no ruby"* && $(which ruby 2>&1) ]]; then
     echo "$(ruby --version | sed -e "s/(.*//" | sed -e "s/ruby/Ruby/")"
