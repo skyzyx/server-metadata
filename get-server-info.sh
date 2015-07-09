@@ -11,9 +11,9 @@ fi;
 function if_installed() {
     if [ "$1" != "" ]; then
         if [[ $(which $1 2>&1) =~ "no $1" ]]; then
-            echo 0;
-        else
             echo 1;
+        else
+            echo 0;
         fi;
     fi;
 }
