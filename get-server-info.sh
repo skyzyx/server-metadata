@@ -96,6 +96,12 @@ echo "Bash $(bash --version 2>&1 | head -n 1 | sed -e "s/-release.*//" | sed -e 
 if [[ $(which curl 2>&1) != *"no curl"* && $(which curl 2>&1) ]]; then
     echo "$(curl --version 2>&1 | head -n 1 | sed -e "s/ ([^\)]*)/:/")"
 fi;
+if [[ $(which docker-compose 2>&1) != *"no docker-compose"* && $(which docker-compose 2>&1) ]]; then
+    echo "Docker Compose $(docker-compose --version | sed -e "s/.*version //")"
+fi;
+if [[ $(which docker-machine 2>&1) != *"no docker-machine"* && $(which docker-machine 2>&1) ]]; then
+    echo "Docker Machine $(docker-machine --version | sed -e "s/.*version //")"
+fi;
 if [[ $(which git 2>&1) != *"no git"* && $(which git 2>&1) ]]; then
     echo "$(git version | sed -e "s/git version/Git/" | head -n 1)"
 fi;
@@ -142,6 +148,12 @@ echo ""
 echo "SERVICES:"
 if [[ $(which docker 2>&1) != *"no docker"* && $(which docker 2>&1) ]]; then
     echo "Docker $(docker --version | sed -e "s/.*version //" | sed -e "s/,.*//")"
+fi;
+if [[ $(which etcd 2>&1) != *"no etcd"* && $(which etcd 2>&1) ]]; then
+    echo "etcd $(etcd --version | sed -e "s/.*version //")"
+fi;
+if [[ $(which fleet 2>&1) != *"no fleet"* && $(which fleet 2>&1) ]]; then
+    echo "Fleet $(fleet --version | sed -e "s/.*version //")"
 fi;
 if [[ $(which httpd 2>&1) != *"no httpd"* && $(which httpd 2>&1) ]]; then
     echo "$(httpd -v | grep -i "Server version:" | sed -e "s/Server version: *//")"
