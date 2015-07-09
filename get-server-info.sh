@@ -171,7 +171,7 @@ if [[ $(which psql 2>&1) != *"no psql"* && $(which psql 2>&1) ]]; then
     echo "PostgreSQL $(psql -V | sed -e "s/.*) *//")"
 fi;
 if [[ $(which redis-server 2>&1) != *"no redis-server"* && $(which redis-server 2>&1) ]]; then
-    echo "$(redis-server --version | sed -e "s/ server v=/ /" | sed -e "s/sha=.*//")"
+    echo "$(redis-server --version | sed -e "s/ server v=/ /" | sed -e "s/sha=.*//" | sed -e "s/ server version//" | sed -e "s/ (.*//")"
 fi;
 if [[ $(which rsyslogd 2>&1) != *"no rsyslogd"* && $(which rsyslogd 2>&1) ]]; then
     echo "$(__rsyslog)"
