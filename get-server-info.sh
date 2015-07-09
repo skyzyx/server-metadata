@@ -100,7 +100,7 @@ fi;
 if [[ $(which git 2>&1) != *"no git"* && $(which git 2>&1) ]]; then
     echo "$(git version | sed -e "s/git version/Git/" | head -n 1)"
 fi;
-if [[ $(which openssl 2>&1) != *"no openssl"* && $(which openssl 2>&1) ]] && [[ $(which apt-get 2>&1) != *"no yum"* && $(which apt-get 2>&1) ]]; then
+if [[ $(which openssl 2>&1) != *"no openssl"* && $(which openssl 2>&1) ]] && [[ $(which apt-get 2>&1) != *"no apt-get"* && $(which apt-get 2>&1) ]]; then
     echo "$(apt-cache show openssl | grep 'Version:' | head -n 1 | sed 's/Version:/OpenSSL/')"
 elif [[ $(which openssl 2>&1) != *"no openssl"* && $(which openssl 2>&1) ]] && [[ $(which yum 2>&1) != *"no yum"* && $(which yum 2>&1) ]]; then
     echo "OpenSSL $(yum list openssl 2>&1 | grep -i "openssl.x86_64" | awk '{print $2}')"
