@@ -91,6 +91,9 @@ fi;
 echo ""
 
 echo "SOFTWARE:"
+if [[ $(which awk 2>&1) != *"no awk"* && $(which awk 2>&1) ]]; then
+    echo "$(awk --version 2>&1 | head -n 1)"
+fi;
 if [[ $(which curl 2>&1) != *"no curl"* && $(which curl 2>&1) ]]; then
     echo "$(curl --version 2>&1 | head -n 1 | sed -e "s/ ([^\)]*)/:/")"
 fi;
@@ -103,6 +106,9 @@ elif [[ $(which openssl 2>&1) != *"no openssl"* && $(which openssl 2>&1) ]] && [
     echo "$(apt-cache show openssl | grep 'Version:' | head -n 1 | sed 's/Version:/OpenSSL/')"
 else
     echo "$(openssl version)"
+fi;
+if [[ $gnused == true ]]; then
+    echo "$($sed --version 2>&1 | head -n 1)"
 fi;
 
 #-------------------------------------------------------------------------------
