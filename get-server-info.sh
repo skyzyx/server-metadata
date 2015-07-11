@@ -120,7 +120,10 @@ fi;
 echo ""
 
 hhvm=false
-echo "RUNTIMES:"
+echo "RUNTIMES/COMPILERS:"
+if [[ $(which gcc 2>&1) != *"no gcc"* && $(which gcc 2>&1) ]]; then
+    echo "$(gcc --version 2>/dev/null | head -n 1 | sed -e "s/Apple //" | sed -e "s/version //")"
+fi;
 if [[ $(which go 2>&1) != *"no go"* && $(which go 2>&1) ]]; then
     echo "Golang: $(go version 2>&1 | sed -e "s/version go//" | awk '{print $2}')"
 fi;
@@ -130,6 +133,9 @@ if [[ $(which hhvm 2>&1) != *"no hhvm"* && $(which hhvm 2>&1) ]]; then
 fi;
 if [[ $(which java 2>&1) != *"no java"* && $(which java 2>&1) ]]; then
     echo "Java $(java -version 2>&1 | head -n 2 | tail -n 1 | sed -e "s/.*build //" | tr -d ")" )"
+fi;
+if [[ $(which clang 2>&1) != *"no clang"* && $(which clang 2>&1) ]]; then # LLVM
+    echo "$(clang --version 2>/dev/null | head -n 1 | sed -e "s/Apple //" | sed -e "s/version //")"
 fi;
 if [[ $(which node 2>&1) != *"no node"* && $(which node 2>&1) ]]; then
     echo "Node.js $(node --version 2>&1)"
