@@ -146,6 +146,9 @@ fi;
 if [[ $(which ruby 2>&1) != *"no ruby"* && $(which ruby 2>&1) ]]; then
     echo "$(ruby --version | sed -e "s/(.*//" | sed -e "s/ruby/Ruby/")"
 fi;
+if [[ $(which scalac 2>&1) != *"no scalac"* && $(which scalac 2>&1) ]]; then
+    echo "Scala $(scalac -version 2>&1 | sed -e "s/.*version //" | sed -e "s/ -- .*//")"
+fi;
 if [[ $(which swift 2>&1) != *"no swift"* && $(which swift 2>&1) ]]; then
     echo "Swift $(swift -version | head -n 1 | sed -e "s/.*version //")"
 fi;
