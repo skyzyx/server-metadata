@@ -134,7 +134,7 @@ fi;
 if [[ $(which node 2>&1) != *"no node"* && $(which node 2>&1) ]]; then
     echo "Node.js $(node --version 2>&1)"
 fi;
-if [[ $(which php 2>&1) != *"no php"* && $(which php 2>&1) && hhvm == false ]]; then
+if [[ $(which php 2>&1) != *"no php"* && $(which php 2>&1) && $hhvm == false ]]; then
     echo "$(php --version 2>&1 | head -n 1 | sed -e "s/(cli).*//")"
 fi;
 if [[ $(which python 2>&1) != *"no python"* && $(which python 2>&1) ]]; then
