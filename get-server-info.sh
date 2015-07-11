@@ -90,7 +90,12 @@ echo "SOFTWARE:"
 if [[ $(which awk 2>&1) != *"no awk"* && $(which awk 2>&1) ]]; then
     echo "$(awk --version 2>&1 | head -n 1)"
 fi;
-echo "Bash $(bash --version 2>&1 | head -n 1 | sed -e "s/-release.*//" | sed -e "s/GNU bash, version //")"
+if [[ $(which bash 2>&1) != *"no bash"* && $(which bash 2>&1) ]]; then
+    echo "Bash shell $(bash --version 2>&1 | head -n 1 | sed -e "s/-release.*//" | sed -e "s/GNU bash, version //")"
+fi;
+if [[ $(which csh 2>&1) != *"no csh"* && $(which csh 2>&1) ]]; then
+    echo "C-shell $(csh --version | sed -e "s/ (.*)//g")"
+fi;
 if [[ $(which curl 2>&1) != *"no curl"* && $(which curl 2>&1) ]]; then
     echo "$(curl --version 2>&1 | head -n 1 | sed -e "s/ ([^\)]*)/:/")"
 fi;
@@ -100,8 +105,14 @@ fi;
 if [[ $(which docker-machine 2>&1) != *"no docker-machine"* && $(which docker-machine 2>&1) ]]; then
     echo "Docker Machine $(docker-machine --version | sed -e "s/.*version //")"
 fi;
+if [[ $(which fish 2>&1) != *"no fish"* && $(which fish 2>&1) ]]; then
+    echo "Fish shell $(fish --version 2>&1 | sed -e "s/.*version //")"
+fi;
 if [[ $(which git 2>&1) != *"no git"* && $(which git 2>&1) ]]; then
     echo "$(git version | sed -e "s/git version/Git/" | head -n 1)"
+fi;
+if [[ $(which ksh 2>&1) != *"no ksh"* && $(which ksh 2>&1) ]]; then
+    echo "Korn shell $(ksh --version 2>&1 | sed -e "s/.*) //")"
 fi;
 if [[ $(which nano 2>&1) != *"no nano"* && $(which nano 2>&1) ]]; then
     echo "$(nano --version | head -n 1 | sed -e "s/ (.*)//" | sed -e "s/^ *//")"
@@ -118,6 +129,9 @@ if [[ $gnused == true ]]; then
 fi;
 if [[ $(which vi 2>&1) != *"no vi"* && $(which vi 2>&1) ]]; then
     echo "$(vi --version | head -n 1 | sed -e "s/ (.*)//")"
+fi;
+if [[ $(which zsh 2>&1) != *"no zsh"* && $(which zsh 2>&1) ]]; then
+    echo "Z-shell $(zsh --version | sed -e "s/ (.*//" | sed -e "s/zsh //")"
 fi;
 
 #-------------------------------------------------------------------------------
