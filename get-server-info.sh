@@ -103,6 +103,9 @@ fi;
 if [[ $(which git 2>&1) != *"no git"* && $(which git 2>&1) ]]; then
     echo "$(git version | sed -e "s/git version/Git/" | head -n 1)"
 fi;
+if [[ $(which nano 2>&1) != *"no nano"* && $(which nano 2>&1) ]]; then
+    echo "$(nano --version | head -n 1 | sed -e "s/ (.*)//")"
+fi;
 if [[ $(which openssl 2>&1) != *"no openssl"* && $(which openssl 2>&1) ]] && [[ $(which apt-get 2>&1) != *"no apt-get"* && $(which apt-get 2>&1) ]]; then
     echo "$(apt-cache show openssl | grep 'Version:' | head -n 1 | sed 's/Version:/OpenSSL/')"
 elif [[ $(which openssl 2>&1) != *"no openssl"* && $(which openssl 2>&1) ]] && [[ $(which yum 2>&1) != *"no yum"* && $(which yum 2>&1) ]]; then
@@ -112,6 +115,9 @@ else
 fi;
 if [[ $gnused == true ]]; then
     echo "$($sed --version 2>&1 | head -n 1)"
+fi;
+if [[ $(which vi 2>&1) != *"no vi"* && $(which vi 2>&1) ]]; then
+    echo "$(vi --version | head -n 1 | sed -e "s/ (.*)//")"
 fi;
 
 #-------------------------------------------------------------------------------
