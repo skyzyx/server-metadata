@@ -26,15 +26,6 @@ function __uptime() {
     echo $uptime
 }
 
-function __rsyslog() {
-    rsl="$(rsyslogd -v 2>&1)"
-    rsl="$(echo "$rsl" | grep -vi "no" | grep -vi "rsyslog.com" | grep ".")"
-    rsl="$(echo "$rsl" | sed -e "s/:\s*Yes//" | sed -e "s/^\s*/ /" | sed -e "s/^\s*//")"
-    rsl="$(echo "$rsl" | awk '{printf "%s, ", $0} END {print ""}' | awk '{sub(/, $/,""); print}')"
-    rsl="$(echo "$rsl" | sed -e "s/:,/:/")"
-    echo "$rsl"
-}
-
 #-------------------------------------------------------------------------------
 
 echo "OPERATING SYSTEM:"
@@ -46,6 +37,8 @@ fi;
 if [[ $(which uname 2>&1) != *"no uname"* && $(which uname 2>&1) ]]; then
     echo "Kernel: $(uname) $(uname -r)"
 fi;
+echo "Active Shell: $SHELL"
+$(echo $SHELL) --version | head -n 1
 
 #-------------------------------------------------------------------------------
 echo ""
@@ -86,49 +79,18 @@ fi;
 #-------------------------------------------------------------------------------
 echo ""
 
-echo "SOFTWARE:"
-if [[ $(which awk 2>&1) != *"no awk"* && $(which awk 2>&1) ]]; then
-    echo "$(awk --version 2>&1 | head -n 1)"
-fi;
+echo "SHELLS:"
 if [[ $(which bash 2>&1) != *"no bash"* && $(which bash 2>&1) ]]; then
     echo "Bash shell $(bash --version 2>&1 | head -n 1 | sed -e "s/-release.*//" | sed -e "s/GNU bash, version //")"
 fi;
 if [[ $(which csh 2>&1) != *"no csh"* && $(which csh 2>&1) ]]; then
     echo "C-shell $(csh --version | sed -e "s/ (.*)//g")"
 fi;
-if [[ $(which curl 2>&1) != *"no curl"* && $(which curl 2>&1) ]]; then
-    echo "$(curl --version 2>&1 | head -n 1 | sed -e "s/ ([^\)]*)/:/")"
-fi;
-if [[ $(which docker-compose 2>&1) != *"no docker-compose"* && $(which docker-compose 2>&1) ]]; then
-    echo "Docker Compose $(docker-compose --version | sed -e "s/.*version //")"
-fi;
-if [[ $(which docker-machine 2>&1) != *"no docker-machine"* && $(which docker-machine 2>&1) ]]; then
-    echo "Docker Machine $(docker-machine --version | sed -e "s/.*version //")"
-fi;
 if [[ $(which fish 2>&1) != *"no fish"* && $(which fish 2>&1) ]]; then
     echo "Fish shell $(fish --version 2>&1 | sed -e "s/.*version //")"
 fi;
-if [[ $(which git 2>&1) != *"no git"* && $(which git 2>&1) ]]; then
-    echo "$(git version | sed -e "s/git version/Git/" | head -n 1)"
-fi;
 if [[ $(which ksh 2>&1) != *"no ksh"* && $(which ksh 2>&1) ]]; then
     echo "Korn shell $(ksh --version 2>&1 | sed -e "s/.*) //")"
-fi;
-if [[ $(which nano 2>&1) != *"no nano"* && $(which nano 2>&1) ]]; then
-    echo "$(nano --version | head -n 1 | sed -e "s/ (.*)//" | sed -e "s/^ *//")"
-fi;
-if [[ $(which openssl 2>&1) != *"no openssl"* && $(which openssl 2>&1) ]] && [[ $(which apt-get 2>&1) != *"no apt-get"* && $(which apt-get 2>&1) ]]; then
-    echo "$(apt-cache show openssl | grep 'Version:' | head -n 1 | sed 's/Version:/OpenSSL/')"
-elif [[ $(which openssl 2>&1) != *"no openssl"* && $(which openssl 2>&1) ]] && [[ $(which yum 2>&1) != *"no yum"* && $(which yum 2>&1) ]]; then
-    echo "OpenSSL $(yum list openssl 2>&1 | grep -i "openssl.x86_64" | awk '{print $2}')"
-else
-    echo "$(openssl version)"
-fi;
-if [[ $gnused == true ]]; then
-    echo "$($sed --version 2>&1 | head -n 1)"
-fi;
-if [[ $(which vi 2>&1) != *"no vi"* && $(which vi 2>&1) ]]; then
-    echo "$(vi --version | head -n 1 | sed -e "s/ (.*)//")"
 fi;
 if [[ $(which zsh 2>&1) != *"no zsh"* && $(which zsh 2>&1) ]]; then
     echo "Z-shell $(zsh --version | sed -e "s/ (.*//" | sed -e "s/zsh //")"
@@ -180,6 +142,67 @@ fi;
 #-------------------------------------------------------------------------------
 echo ""
 
+echo "VERSION CONTROL:"
+if [[ $(which cvs 2>&1) != *"no cvs"* && $(which cvs 2>&1) ]]; then
+    echo "CVS $(cvs --version | head -n 2 | tail -n 1 | sed -e "s/.*CVS) //" | sed -e "s/ (.*//")"
+fi;
+if [[ $(which git 2>&1) != *"no git"* && $(which git 2>&1) ]]; then
+    echo "$(git version | sed -e "s/git version/Git/" | head -n 1)"
+fi;
+if [[ $(which hg 2>&1) != *"no hg"* && $(which hg 2>&1) ]]; then
+    echo "Mercurial $(hg --version | head -n 1 | sed -e "s/.*version //" | sed -e "s/)//")"
+fi;
+if [[ $(which svn 2>&1) != *"no svn"* && $(which svn 2>&1) ]]; then
+    echo "Subversion $(svn --version | head -n 1 | sed -e "s/.*version //")"
+fi;
+
+#-------------------------------------------------------------------------------
+echo ""
+
+echo "EDITORS:"
+if [[ $(which emacs 2>&1) != *"no emacs"* && $(which emacs 2>&1) ]]; then
+    echo "$(emacs --version | head -n 1)"
+fi;
+if [[ $(which nano 2>&1) != *"no nano"* && $(which nano 2>&1) ]]; then
+    echo "$(nano --version | head -n 1 | sed -e "s/ (.*)//" | sed -e "s/^ *//")"
+fi;
+if [[ $(which vi 2>&1) != *"no vi"* && $(which vi 2>&1) ]]; then
+    echo "$(vi --version | head -n 1 | sed -e "s/ (.*)//")"
+fi;
+
+#-------------------------------------------------------------------------------
+echo ""
+
+echo "SOFTWARE:"
+if [[ $(which awk 2>&1) != *"no awk"* && $(which awk 2>&1) ]]; then
+    echo "$(awk --version 2>&1 | head -n 1)"
+fi;
+if [[ $(which curl 2>&1) != *"no curl"* && $(which curl 2>&1) ]]; then
+    echo "$(curl --version 2>&1 | head -n 1 | sed -e "s/ ([^\)]*)/:/")"
+fi;
+if [[ $(which docker-compose 2>&1) != *"no docker-compose"* && $(which docker-compose 2>&1) ]]; then
+    echo "Docker Compose $(docker-compose --version | head -n 1 | sed -e "s/.*version:* //")"
+fi;
+if [[ $(which docker-machine 2>&1) != *"no docker-machine"* && $(which docker-machine 2>&1) ]]; then
+    echo "Docker Machine $(docker-machine --version | head -n 1 | sed -e "s/.*version //")"
+fi;
+if [[ $(which docker-swarm 2>&1) != *"no docker-swarm"* && $(which docker-swarm 2>&1) ]]; then
+    echo "Docker Swarm $(docker-swarm --version | head -n 1 | sed -e "s/.*version //")"
+fi;
+if [[ $(which openssl 2>&1) != *"no openssl"* && $(which openssl 2>&1) ]] && [[ $(which apt-get 2>&1) != *"no apt-get"* && $(which apt-get 2>&1) ]]; then
+    echo "$(apt-cache show openssl | grep 'Version:' | head -n 1 | sed 's/Version:/OpenSSL/')"
+elif [[ $(which openssl 2>&1) != *"no openssl"* && $(which openssl 2>&1) ]] && [[ $(which yum 2>&1) != *"no yum"* && $(which yum 2>&1) ]]; then
+    echo "OpenSSL $(yum list openssl 2>&1 | grep -i "openssl.x86_64" | awk '{print $2}')"
+else
+    echo "$(openssl version)"
+fi;
+if [[ $gnused == true ]]; then
+    echo "$($sed --version 2>&1 | head -n 1)"
+fi;
+
+#-------------------------------------------------------------------------------
+echo ""
+
 echo "SERVICES:"
 if [[ $(which docker 2>&1) != *"no docker"* && $(which docker 2>&1) ]]; then
     echo "Docker $(docker --version | sed -e "s/.*version //" | sed -e "s/,.*//")"
@@ -191,7 +214,7 @@ if [[ $(which fleet 2>&1) != *"no fleet"* && $(which fleet 2>&1) ]]; then
     echo "Fleet $(fleet --version | sed -e "s/.*version //")"
 fi;
 if [[ $(which httpd 2>&1) != *"no httpd"* && $(which httpd 2>&1) ]]; then
-    echo "$(httpd -v | grep -i "Server version:" | sed -e "s/Server version: *//")"
+    echo "$(httpd -v | grep -i "Server version:" | sed -e "s/Server version: *//" | sed -e "s/Apache\//httpd /")"
 fi;
 if [[ $(which mongo 2>&1) != *"no mongo"* && $(which mongo 2>&1) ]]; then
     echo "$(mongo --version | sed -e "s/ shell version://")"
@@ -209,11 +232,17 @@ if [[ $(which redis-server 2>&1) != *"no redis-server"* && $(which redis-server 
     echo "$(redis-server --version | sed -e "s/ server v=/ /" | sed -e "s/sha=.*//" | sed -e "s/ server version//" | sed -e "s/ (.*//")"
 fi;
 if [[ $(which rsyslogd 2>&1) != *"no rsyslogd"* && $(which rsyslogd 2>&1) ]]; then
-    echo "$(__rsyslog)"
+    echo "$(rsyslogd -v 2>&1 | grep -vi "no" | grep -vi "rsyslog.com" | grep "." | sed -e "s/:\s*Yes//" | sed -e "s/^\s*/ /" | sed -e "s/^\s*//" | awk '{printf "%s, ", $0} END {print ""}' | awk '{sub(/, $/,""); print}' | sed -e "s/:,/:/")"
 fi;
 if [[ $(which unicorn 2>&1) != *"no unicorn"* && $(which unicorn 2>&1) ]]; then
     echo "$(unicorn -v | sed -e "s/unicorn v/Unicorn /")"
 fi;
+
+#-------------------------------------------------------------------------------
+echo ""
+
+echo "LOGGERS:"
+ls -d /etc/*syslog*.conf | sed -e "s/\/etc\///" | sed -e "s/.conf//"
 
 #-------------------------------------------------------------------------------
 echo ""
