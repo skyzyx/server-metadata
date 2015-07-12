@@ -199,6 +199,9 @@ fi;
 if [[ $gnused == true ]]; then
     echo "$($sed --version 2>&1 | head -n 1)"
 fi;
+if [[ $(which vagrant 2>&1) != *"no vagrant"* && $(which vagrant 2>&1) ]]; then
+    echo "$(vagrant --version 2>&1 | head -n 1)"
+fi;
 
 #-------------------------------------------------------------------------------
 echo ""
