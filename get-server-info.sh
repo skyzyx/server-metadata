@@ -235,7 +235,7 @@ if [[ $(which redis-server 2>&1) != *"no redis-server"* && $(which redis-server 
     echo "$(redis-server --version | sed -e "s/ server v=/ /" | sed -e "s/sha=.*//" | sed -e "s/ server version//" | sed -e "s/ (.*//")"
 fi;
 if [[ $(which rsyslogd 2>&1) != *"no rsyslogd"* && $(which rsyslogd 2>&1) ]]; then
-    echo "$(rsyslogd -v 2>&1 | grep -vi "no" | grep -vi "rsyslog.com" | grep "." | sed -e "s/:\s*Yes//" | sed -e "s/^\s*/ /" | sed -e "s/^\s*//" | awk '{printf "%s, ", $0} END {print ""}' | awk '{sub(/, $/,""); print}' | sed -e "s/:,/:/")"
+    echo "$(rsyslogd -v 2>&1 | head -n 1 | sed -e "s/,.*//")"
 fi;
 if [[ $(which unicorn 2>&1) != *"no unicorn"* && $(which unicorn 2>&1) ]]; then
     echo "$(unicorn -v | sed -e "s/unicorn v/Unicorn /")"
