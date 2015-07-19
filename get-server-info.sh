@@ -59,7 +59,7 @@ echo ""
 echo "HARDWARE:"
 if [ -f /proc/cpuinfo ]; then
     echo "CPU Speed: $(cat /proc/cpuinfo | grep 'model name' | sed -e "s/.*@ *//" | head -n 1)"
-    echo "CPU Cores: $(cat /proc/cpuinfo | grep 'cpu cores' | sed -e "s/.*: //" | head -n 1)"
+    echo "CPU Cores: $(nproc)"
 elif [[ $(which sysctl 2>&1) != *"no sysctl"* && $(which sysctl 2>&1) ]]; then
     echo "CPU Speed: $(sysctl -n machdep.cpu.brand_string | sed -e "s/.*@ *//")"
     echo "CPU Cores: $(sysctl -n hw.ncpu)"
