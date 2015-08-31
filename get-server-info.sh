@@ -318,6 +318,18 @@ fi;
 if [[ $(which easy_install 2>&1) != *"no easy_install"* && $(which easy_install 2>&1) ]]; then
     echo "$(easy_install --version) ($(which easy_install 2>&1))"
 fi;
+if [[ $(which easy_install-2.6 2>&1) != *"no easy_install"* && $(which easy_install-2.6 2>&1) ]]; then
+    echo "$(easy_install-2.6 --version) ($(which easy_install-2.6 2>&1))"
+fi;
+if [[ $(which easy_install-2.7 2>&1) != *"no easy_install"* && $(which easy_install-2.7 2>&1) ]]; then
+    echo "$(easy_install-2.7 --version) ($(which easy_install-2.7 2>&1))"
+fi;
+if [[ $(which easy_install-3.4 2>&1) != *"no easy_install"* && $(which easy_install-3.4 2>&1) ]]; then
+    echo "$(easy_install-3.4 --version) ($(which easy_install-3.4 2>&1))"
+fi;
+if [[ $(which easy_install-3.5 2>&1) != *"no easy_install"* && $(which easy_install-3.5 2>&1) ]]; then
+    echo "$(easy_install-3.5 --version) ($(which easy_install-3.5 2>&1))"
+fi;
 if [[ $(which yum 2>&1) != *"no yum"* && $(which yum 2>&1) ]]; then
     echo "YUM $(yum --version | head -n 1) ($(which yum 2>&1))"
 fi;
