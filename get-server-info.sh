@@ -297,8 +297,20 @@ fi;
 if [[ $(which pip 2>&1) != *"no pip"* && $(which pip 2>&1) ]]; then
     echo "$(pip --version 2>&1 | sed -e "s/from.*(/(/") ($(which pip 2>&1))"
 fi;
+if [[ $(which pip2 2>&1) != *"no pip"* && $(which pip2 2>&1) ]]; then
+    echo "$(pip2 --version 2>&1 | sed -e "s/from.*(/(/") ($(which pip2 2>&1))"
+fi;
+if [[ $(which pip2.6 2>&1) != *"no pip"* && $(which pip2.6 2>&1) ]]; then
+    echo "$(pip2.6 --version 2>&1 | sed -e "s/from.*(/(/") ($(which pip2.6 2>&1))"
+fi;
+if [[ $(which pip2.7 2>&1) != *"no pip"* && $(which pip2.7 2>&1) ]]; then
+    echo "$(pip2.7 --version 2>&1 | sed -e "s/from.*(/(/") ($(which pip2.7 2>&1))"
+fi;
 if [[ $(which pip3 2>&1) != *"no pip3"* && $(which pip3 2>&1) ]]; then
     echo "$(pip3 --version 2>&1 | sed -e "s/from.*(/(/") ($(which pip3 2>&1))"
+fi;
+if [[ $(which pip3.4 2>&1) != *"no pip3"* && $(which pip3.4 2>&1) ]]; then
+    echo "$(pip3.4 --version 2>&1 | sed -e "s/from.*(/(/") ($(which pip3.4 2>&1))"
 fi;
 if [[ $(which gem 2>&1) != *"no gem"* && $(which gem 2>&1) ]]; then
     echo "RubyGems $(gem --version) ($(which gem 2>&1))"
