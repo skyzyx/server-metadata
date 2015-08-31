@@ -124,34 +124,34 @@ if [[ $(which php 2>&1) != *"no php"* && $(which php 2>&1) && $hhvm == false ]];
     echo "$(php --version 2>&1 | head -n 1 | sed -e "s/(cli).*//")"
 fi;
 if [[ $(which python 2>&1) != *"no python"* && $(which python 2>&1) ]]; then
-    echo "$(python --version 2>&1)"
+    echo "$(which python): $(python --version 2>&1)"
 fi;
 if [[ $(which python26 2>&1) != *"no python"* && $(which python26 2>&1) ]]; then
-    echo "$(python26 --version 2>&1)"
+    echo "$(which python26): $(python26 --version 2>&1)"
 fi;
 if [[ $(which python2.6 2>&1) != *"no python"* && $(which python2.6 2>&1) ]]; then
-    echo "$(python2.6 --version 2>&1)"
+    echo "$(which python2.6): $(python2.6 --version 2>&1)"
 fi;
 if [[ $(which python27 2>&1) != *"no python"* && $(which python27 2>&1) ]]; then
-    echo "$(python27 --version 2>&1)"
+    echo "$(which python27): $(python27 --version 2>&1)"
 fi;
 if [[ $(which python2.7 2>&1) != *"no python"* && $(which python2.7 2>&1) ]]; then
-    echo "$(python2.7 --version 2>&1)"
+    echo "$(which python2.7): $(python2.7 --version 2>&1)"
 fi;
 if [[ $(which python3 2>&1) != *"no python3"* && $(which python3 2>&1) ]]; then
-    echo "$(python3 --version 2>&1)"
+    echo "$(which python3): $(python3 --version 2>&1)"
 fi;
 if [[ $(which python34 2>&1) != *"no python3"* && $(which python34 2>&1) ]]; then
-    echo "$(python34 --version 2>&1)"
+    echo "$(which python34): $(python34 --version 2>&1)"
 fi;
 if [[ $(which python3.4 2>&1) != *"no python3"* && $(which python3.4 2>&1) ]]; then
-    echo "$(python3.4 --version 2>&1)"
+    echo "$(which python3.4): $(python3.4 --version 2>&1)"
 fi;
 if [[ $(which python35 2>&1) != *"no python3"* && $(which python35 2>&1) ]]; then
-    echo "$(python35 --version 2>&1)"
+    echo "$(which python35): $(python35 --version 2>&1)"
 fi;
 if [[ $(which python3.5 2>&1) != *"no python3"* && $(which python3.5 2>&1) ]]; then
-    echo "$(python3.5 --version 2>&1)"
+    echo "$(which python3.5): $(python3.5 --version 2>&1)"
 fi;
 if [[ $(which ruby 2>&1) != *"no ruby"* && $(which ruby 2>&1) ]]; then
     echo "$(ruby --version | sed -e "s/(.*//" | sed -e "s/ruby/Ruby/")"
