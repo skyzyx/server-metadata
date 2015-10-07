@@ -312,6 +312,9 @@ fi;
 if [[ $(which pip3.4 2>&1) != *"no pip3"* && $(which pip3.4 2>&1) ]]; then
     echo "$(pip3.4 --version 2>&1 | sed -e "s/from.*(/(/") ($(which pip3.4 2>&1))"
 fi;
+if [[ $(which pip3.5 2>&1) != *"no pip3"* && $(which pip3.5 2>&1) ]]; then
+    echo "$(pip3.5 --version 2>&1 | sed -e "s/from.*(/(/") ($(which pip3.5 2>&1))"
+fi;
 if [[ $(which gem 2>&1) != *"no gem"* && $(which gem 2>&1) ]]; then
     echo "RubyGems $(gem --version) ($(which gem 2>&1))"
 fi;
