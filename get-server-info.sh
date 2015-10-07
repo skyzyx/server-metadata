@@ -1,3 +1,5 @@
+#! /usr/bin/env bash
+
 # https://github.com/skyzyx/server-metadata
 # By Ryan Parman
 
