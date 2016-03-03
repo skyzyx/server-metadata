@@ -3,7 +3,7 @@ Retrieves version information about the hardware, network, software and services
 
 ```bash
 sudo wget -qO /usr/bin/server-info \
-    https://raw.githubusercontent.com/skyzyx/server-metadata/master/get-server-info.sh
+    https://raw.githubusercontent.com/skyzyx/server-metadata/master/get-server-info.sh && \
 chmod +x /usr/bin/server-info
 ```
 
